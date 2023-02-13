@@ -8,16 +8,21 @@ import {
     resultsArt,
 } from "./messages.js";
 
-
-let currentUser;
-verifyPlayer();
-
 // Game "rock, paper, scissors" player vs computer
 const OPTIONS_ARR = ["rock", "paper", "scissors"];
 let computerWins = 0;
 let playerWins = 0;
+let isFirstLoad = (!localStorage.getItem('firstLoad')) ? true : false;
+let currentUser;
 
-game()
+// Restart the game after first load to avoid missing console.log
+if (isFirstLoad) {
+    localStorage.setItem('firstLoad', '1');
+    document.location.reload()
+}else {
+    verifyPlayer();
+    game()
+}
 
 // Run the game
 function game() {
