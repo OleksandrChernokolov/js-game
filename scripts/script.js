@@ -196,14 +196,15 @@ function showHelpMessage() {
 
 function verifyPlayer() {
     const lastPlayer = localStorage.getItem('lastPlayer');
+    const greetings = `Hi! This is a "Rock, Paper, Scissors" game. To monitor the result of the game, open the console please.\n`
     if (lastPlayer) {
-        const conf = confirm(`Keep Playing as ${lastPlayer}?`);
+        const conf = confirm(greetings+`Keep Playing as ${lastPlayer}?`);
         if (conf) {
             currentUser = lastPlayer
         }
     }
     if (!currentUser) {
-        const aliasPrompt = prompt("Enter your player alias");
+        const aliasPrompt = prompt(greetings+"Enter your game alias if you want.");
         currentUser = (aliasPrompt!=null && aliasPrompt.trim()!="") ? aliasPrompt.trim() : "Player";
         localStorage.setItem('lastPlayer', currentUser)
         alert(`Welcome ${currentUser}`);
