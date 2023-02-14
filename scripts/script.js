@@ -12,17 +12,10 @@ import {
 const OPTIONS_ARR = ["rock", "paper", "scissors"];
 let computerWins = 0;
 let playerWins = 0;
-let isFirstLoad = (!localStorage.getItem('firstLoad')) ? true : false;
 let currentUser;
 
-// Restart the game after first load to avoid missing console.log
-if (isFirstLoad) {
-    localStorage.setItem('firstLoad', '1');
-    document.location.reload()
-}else {
-    verifyPlayer();
-    game()
-}
+verifyPlayer();
+game()
 
 // Run the game
 function game() {
@@ -48,8 +41,8 @@ function game() {
 // Finish the game
 function gameResult(roundsFinished) {
     let gameResult = "";
-   
-    if(roundsFinished<5) {
+
+    if (roundsFinished < 5) {
         console.log(gameStopMessage)
         return;
     }
@@ -108,7 +101,7 @@ function userPlay(round) {
 
     while (promptResp.str === "") {
 
-        let message = "Round "+round+"\n";
+        let message = "Round " + round + "\n";
 
         switch (promptResp.err) {
             case "1":
@@ -121,7 +114,7 @@ function userPlay(round) {
                 break;
             case "2":
 
-                message += `Come on! ${currentUser} you just need to enter your option in the input box below.`+info;
+                message += `Come on! ${currentUser} you just need to enter your option in the input box below.` + info;
 
                 promptResp = promptReq(message, promptResp)
                 break;
@@ -198,21 +191,21 @@ function verifyPlayer() {
     const lastPlayer = localStorage.getItem('lastPlayer');
     const greetings = `Hi! This is a "Rock, Paper, Scissors" game. To monitor the result of the game, open the console please.\n`
     if (lastPlayer) {
-        const conf = confirm(greetings+`Keep Playing as ${lastPlayer}?`);
+        const conf = confirm(greetings + `Keep Playing as ${lastPlayer}?`);
         if (conf) {
             currentUser = lastPlayer
         }
     }
     if (!currentUser) {
-        const aliasPrompt = prompt(greetings+"Enter your game alias if you want.");
-        currentUser = (aliasPrompt!=null && aliasPrompt.trim()!="") ? aliasPrompt.trim() : "Player";
+        const aliasPrompt = prompt(greetings + "Enter your game alias if you want.");
+        currentUser = (aliasPrompt != null && aliasPrompt.trim() != "") ? aliasPrompt.trim() : "Player";
         localStorage.setItem('lastPlayer', currentUser)
         alert(`Welcome ${currentUser}`);
     }
 }
 
-function overalResults () {
-    checkLocalStorage ();
+function overalResults() {
+    checkLocalStorage();
     const lowerCaseUser = currentUser.toLowerCase();
     let overalResult = localStorage.getItem(`${lowerCaseUser}Score`)
     overalResult = JSON.parse(overalResult)
@@ -236,11 +229,11 @@ function overalResults () {
     return overalResult
 }
 
-function checkLocalStorage () {
+function checkLocalStorage() {
     const lowerCaseUser = currentUser.toLowerCase();
     let overalResult = localStorage.getItem(`${lowerCaseUser}Score`)
     overalResult = JSON.parse(overalResult)
-    const arr = [0,0,0]
+    const arr = [0, 0, 0]
     if (!overalResult) {
         localStorage.setItem(`${lowerCaseUser}Score`, JSON.stringify(arr));
         return
@@ -249,7 +242,7 @@ function checkLocalStorage () {
     const losesToInt = parseInt(overalResult[1]);
     const drawToInt = parseInt(overalResult[2]);
     if (typeof overalResult !== "object" || overalResult.length !== 3 || winsToInt === 'NaN'
-    || losesToInt === 'NaN'|| drawToInt === 'NaN') {
+        || losesToInt === 'NaN' || drawToInt === 'NaN') {
         localStorage.setItem(`${lowerCaseUser}Score`, JSON.stringify(arr));
     }
 }
@@ -262,6 +255,6 @@ function roundFightArt(playerSelection, computerSelection) {
         newString += fightArt[computerSelection][index];
         newString += '\n';
     }
-    
+
     console.log(newString)
 }
